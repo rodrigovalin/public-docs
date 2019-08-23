@@ -1,0 +1,139 @@
+* Kubernetes Major Features / Changes Since v1.11
+:PROPERTIES:
+:Author: Rodrigo Valin
+:Date: <2019-08-22 Thu 11:56>
+:END:
+
+** Kubernetes v1.12
+
++ [[https://kubernetes.io/blog/2018/09/27/kubernetes-1.12-kubelet-tls-bootstrap-and-azure-virtual-machine-scale-sets-vmss-move-to-general-availability/][Announcement post]]
++ Release date: September 27, 2018
+
+Focus on internal improvements and graduating features to stable in
+Kubernetes
+
+*** General Availability of Kubelet TLS Bootstrap
+
+This feature allows for a kubelet to bootstrap itself into a
+TLS-secured cluster. Most importantly, it automates the provision and
+distribution of signed certificates.
+
+*** Azure Virtual Machine Scale Sets (VMSS) and Cluster-Autoscaler
+
+Scaling of containerized applications with Azure VMSS, including the
+ability to integrate it with cluster-autoscaler to automatically
+adjust the size of the Kubernetes clusters based on the same
+conditions.
+
+** Kubernetes v1.13
+
++ [[https://kubernetes.io/blog/2018/12/03/kubernetes-1-13-release-announcement/][Announcement post]]
++ Release date: December 3, 2018
+
+Focus on stability and extensibility of Kubernetes with major features
+graduating to general availability in the areas of Storage and Cluster
+Lifecycle
+
+*** Simplified Kubernetes Cluster Management with kubeadm
+
+ kubeadm handles the bootstrapping of production clusters on existing
+ hardware and configuring the core Kubernetes components in a
+ best-practice-manner to providing a secure yet easy joining flow for
+ new nodes and supporting easy upgrades.
+
+*** Container Storage Interface (CSI) Goes GA
+
+With CSI, the Kubernetes volume layer becomes truly extensible. This
+provides an opportunity for third party storage providers to write
+plugins that interoperate with Kubernetes without having to touch the
+core code.
+
+** Kubernetes v1.14
+
++ [[https://kubernetes.io/blog/2019/03/25/kubernetes-1-14-release-announcement/][Announcement post]]
++ Release date: March 25, 2019
+
+The main themes of this release are extensibility and supporting more
+workloads on Kubernetes with three major features moving to general
+availability, and an important security feature moving to beta.
+
+*** Production-level Support for Windows Nodes
+
+Kubernetes now officially supports adding Windows nodes as worker
+nodes and scheduling Windows containers.
+
+*** kubectl Updates
+
++ *Kustomize Integration*: The declarative Resource Config authoring
+  capabilities of [[https://kustomize.io/][kustomize]] are now available in kubectl through the
+  -k flag
+
++ *kubectl Plugin Mechanism Graduating to Stable*: The kubectl plugin
+  mechanism allows developers to publish their own custom kubectl
+  subcommands in the form of standalone binaries
+
+*** Persistent Local Volumes are Now GA
+
+This feature makes locally attached storage available as a persistent
+volume source.
+
+*** PID Limiting is Moving to Beta
+
+Administrators are able to provide pod-to-pod PID isolation by
+defaulting the number of PIDs per pod as a beta feature.
+
+*** Additional Notable Feature Updates
+
++ *Pod priority and preemption*: enables Kubernetes scheduler to
+  schedule more important Pods first and when cluster is out of
+  resources, it removes less important pods to create room for more
+  important ones. The importance is specified by priority.
+
++ *[[https://github.com/kubernetes/enhancements/blob/master/keps/sig-network/0007-pod-ready%2B%2B.md#implementation-history][Pod Readiness Gates]]*: introduce an extension point for external
+  feedback on pod readiness.
+
++ *Harden the default RBAC discovery clusterrolebindings* removes
+  discovery from the set of APIs which allow for unauthenticated
+  access by default, improving privacy for CRDs and the default
+  security posture of default clusters in general.
+
+** Kubernetes v1.15
+
++ [[https://kubernetes.io/blog/2019/06/19/kubernetes-1-15-release-announcement/][Announcement post]]
++ Release date: June 19, 2019
+
+Main theme in this release is /Extensibility/. More work around /CRDs/
+and /API Machinery/.
+
+*** Extensibility around core Kubernetes APIs
+
+The theme of the new developments around CustomResourceDefinitions is
+data consistency and native behaviour.
+
++ *CustomResourceDefinition Webhook Conversion*:
+  CustomResourceDefinitions support multiple versions as beta since
+  1.14. With Kubernetes 1.15, they gain the ability to convert between
+  different versions on-the-fly.
+
++ *CustomResourceDefinition OpenAPI Publishing*: OpenAPI publishing
+  for CRDs will be available with Kubernetes 1.15 as beta, yet again
+  only for structural schemas.
+
++ *CustomResourceDefinitions Pruning*: Pruning is the automatic
+  removal of unknown fields in objects sent to a Kubernetes API.
+
++ *CustomResourceDefinition Defaulting*: Support for default values on
+  attributes.
+
++ *Admission Webhook Reinvocation & Improvements*: Mutating webhooks
+  can opt-in into at least one re-invocation by specifying
+  /reinvocationPolicy: IfNeeded/. If a later mutating webhook modifies
+  the object, the earlier webhook will get a second chance. This
+  requires that webhooks have an idem-potent-like behaviour which can
+  cope with this second invocation.
+
+*** Cluster Lifecycle Stability and Usability Improvements
+
+Lots of work on making Kubernetes installation, upgrade and
+configuration more robust. Using kubeadm to deploy highly available
+clusters has been promoted to beta.
